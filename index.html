@@ -1,20 +1,200 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<style>
+.slidecontainer {
+  width: 25%;
+}
 
-<head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta name="description" content="Web site created using create-react-app" />
-    <link rel="apple-touch-icon" href="/logo192.png" />
-    <link rel="manifest" href="./manifest.json" />
-    <title>React App</title>
-    <script defer="defer" src="./static/js/main.1f383762.js"></script>
-</head>
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
 
-<body><noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-</body>
+.slider:hover {
+  opacity: 1;
+}
 
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 27px;
+  height: 26px;
+  border: 0;
+  background: url('time_26px.png');
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 23px;
+  height: 24px;
+  border: 0;
+  background: url('time_26px.png');
+  cursor: pointer;
+}
+</style>
+		<script type="module">
+			import { initializeApp } from "https://www.gstatic.com/firebasejs/9.7.0/firebase-app.js";
+			import { getDatabase, ref, update } from "https://www.gstatic.com/firebasejs/9.7.0/firebase-database.js";
+
+			const firebaseConfig = {
+				apiKey: "AIzaSyCQr-J_Bs6gJerXvAJSmGqVAQ64SHrGNuc",
+				authDomain: "projectcar-b2625.firebaseapp.com",
+				databaseURL: "https://projectcar-b2625-default-rtdb.firebaseio.com",
+				projectId: "projectcar-b2625",
+				storageBucket: "projectcar-b2625.appspot.com",
+				messagingSenderId: "195139449853",
+				appId: "1:195139449853:web:42cde51364f45644d95f94"
+			};
+
+			const app = initializeApp(firebaseConfig);
+			const db = getDatabase();
+			const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+			
+window.ileri = async () => {
+				const seconds = parseInt(document.getElementById("myRange").value);
+
+				const data = {
+					ST: true,
+					motor: "1",
+				};
+
+				await update(ref(db), data);
+
+				await sleep(seconds * 1000);
+
+				const data2 = {
+					ST: false,
+				};
+
+				await update(ref(db), data2);
+			};
+
+		
+
+window.geri = async () => {
+				const seconds = parseInt(document.getElementById("myRange").value);
+
+				const data = {
+					ST: true,
+					motor: "2",
+				};
+
+				await update(ref(db), data);
+
+				await sleep(seconds * 1000);
+
+				const data2 = {
+					ST: false,
+				};
+
+				await update(ref(db), data2);
+			};
+
+			
+
+window.sag = async () => {
+				const seconds = parseInt(document.getElementById("myRange").value);
+				const data = {
+					ST: true,
+					motor: "4",
+				};
+
+				await update(ref(db), data);
+
+				await sleep(seconds * 1000);
+
+				const data2 = {
+					ST: false,
+				};
+
+				await update(ref(db), data2);
+			};
+
+window.sol = async () => {
+				const seconds = parseInt(document.getElementById("myRange").value);
+
+				const data = {
+					ST: true,
+					motor: "3",
+				};
+
+				await update(ref(db), data);
+
+				await sleep(seconds * 1000);
+
+				const data2 = {
+					ST: false,
+				};
+
+				await update(ref(db), data2);
+			};
+
+			window.dur = () => {
+				const data = {
+					motor: "5",
+					
+				};
+
+				return update(ref(db), data);
+			};
+			window.sureBelirle = () => {
+				const data = {
+					Sure: parseInt(output.innerHTML),
+				};
+
+				return update(ref(db), data);
+			};
+			window.motorAC = () => {
+				const data = {
+					ST: true,
+				};
+
+				return update(ref(db), data);
+			};
+			window.motorKapa = () => {
+				const data = {
+					ST: false,
+				};
+
+				return update(ref(db), data);
+			};
+
+		</script>
+	</head>
+	<body>
+		<h1>IoT CAR</h1>
+		<div class="slidecontainer">
+  <input type="range" min="1" max="5" value="50" class="slider" id="myRange">
+  <p>Value: <span id="demo"></span></p>
+</div>
+
+<script>
+var slider = document.getElementById("myRange");
+var output = document.getElementById("demo");
+output.innerHTML = slider.value;
+
+slider.oninput = function() {
+  output.innerHTML = this.value;
+}
+</script>
+		<button onclick="motorAC()">Motor Ac</button>
+		<button onclick="motorKapa()">Motor Kapa</button>
+		<hr>
+		<button onclick="sureBelirle()">SURE</button>
+		<hr>
+		<button onclick="ileri()">İleri</button>
+		<button onclick="geri()">Geri</button>
+		<button onclick="sag()">Sag</button>
+		<button onclick="sol()">Sol</button>
+		<button onclick="dur()">Dur</button>
+	</body>
 </html>
